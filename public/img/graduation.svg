@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Выпускной">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9d4cf"/>
+      <stop offset="1" stop-color="#b3aca3"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#bg)"/>
+  <circle cx="180" cy="190" r="56" fill="#cfc6ba" opacity="0.8"/>
+  <circle cx="210" cy="175" r="18" fill="#4b2e2e" opacity="0.5"/>
+  <rect x="150" y="260" width="90" height="240" fill="#5d4a3a" opacity="0.6"/>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Яркий детский снимок">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#bcd8cf"/>
+      <stop offset="1" stop-color="#8fb7a9"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#bg)"/>
+  <circle cx="120" cy="180" r="52" fill="#f7e08b" opacity="0.55"/>
+  <circle cx="300" cy="220" r="40" fill="#7e9a8d" opacity="0.4"/>
+  <path d="M0 420 Q 140 380 300 430 T 400 420 L 400 500 L 0 500 Z" fill="#6f5a3e" opacity="0.5"/>
+</svg>

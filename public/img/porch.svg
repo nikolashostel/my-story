@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Вечерний снимок крыльца">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4c5a66"/>
+      <stop offset="1" stop-color="#26313c"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#bg)"/>
+  <rect x="120" y="300" width="160" height="200" fill="#3a2e26" opacity="0.6"/>
+  <circle cx="200" cy="150" r="34" fill="#e8d98f" opacity="0.8"/>
+</svg>

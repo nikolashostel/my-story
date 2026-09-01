@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Море">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9fd0e3"/>
+      <stop offset="0.7" stop-color="#6ba9c9"/>
+      <stop offset="1" stop-color="#4d8fb5"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#bg)"/>
+  <circle cx="320" cy="90" r="36" fill="#fff2c4" opacity="0.9"/>
+  <path d="M0 380 Q 150 340 300 390 T 400 360 L 400 500 L 0 500 Z" fill="#e7d8b8" opacity="0.8"/>
+  <path d="M0 430 Q 160 400 320 440 T 400 415 L 400 500 L 0 500 Z" fill="#d9c39a" opacity="0.9"/>
+</svg>

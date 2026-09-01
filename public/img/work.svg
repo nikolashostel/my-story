@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Рабочее место">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#efe7d8"/>
+      <stop offset="1" stop-color="#cfc0a8"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#bg)"/>
+  <rect x="60" y="280" width="280" height="140" fill="#8a744f" opacity="0.8"/>
+  <rect x="130" y="330" width="140" height="90" fill="#efe7d8"/>
+  <rect x="300" y="200" width="60" height="40" fill="#4c3f2c" opacity="0.6"/>
+</svg>
