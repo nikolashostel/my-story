@@ -8,9 +8,10 @@ interface StoryScreenProps {
   onOpenPeriod: (periodId: string) => void
   onOpenCard: (periodId: string, cardId: string) => void
   onAddCard: (periodId: string) => void
+  onAddPhoto: (periodId: string, cardId: string, file: File) => void
 }
 
-export function StoryScreen({ periods, onOpenPeriod, onOpenCard, onAddCard }: StoryScreenProps) {
+export function StoryScreen({ periods, onOpenPeriod, onOpenCard, onAddCard, onAddPhoto }: StoryScreenProps) {
   const visiblePeriods = periods.filter((p) => p.cards.length > 0)
 
   return (
@@ -28,7 +29,7 @@ export function StoryScreen({ periods, onOpenPeriod, onOpenCard, onAddCard }: St
               key={period.id}
               title={period.title}
               cards={period.cards}
-              onAddPhoto={() => {}}
+              onAddPhoto={(cardId, file) => onAddPhoto(period.id, cardId, file)}
               onCardOpen={(card) => onOpenCard(period.id, card.id)}
               onAddCard={() => onAddCard(period.id)}
               onOpenPeriod={() => onOpenPeriod(period.id)}

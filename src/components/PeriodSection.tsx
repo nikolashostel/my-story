@@ -7,7 +7,7 @@ interface PeriodSectionProps {
   cards: MemoryCardData[]
   onCardOpen?: (card: MemoryCardData) => void
   onAddCard?: () => void
-  onAddPhoto?: () => void
+  onAddPhoto?: (cardId: string, file: File) => void
   onOpenPeriod?: () => void
 }
 
@@ -43,7 +43,7 @@ export function PeriodSection({
               key={card.id}
               card={card}
               onOpen={() => onCardOpen?.(card)}
-              onAddPhoto={onAddPhoto}
+              onAddPhoto={onAddPhoto ? (file) => onAddPhoto(card.id, file) : undefined}
             />
           ))}
           {onAddCard && <AddMemoryCard onCreate={onAddCard} />}

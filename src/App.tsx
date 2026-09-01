@@ -7,6 +7,7 @@ import { StoryScreen } from './pages/StoryScreen'
 import { PeriodScreen } from './pages/PeriodScreen'
 import { MemorySheet } from './components/MemorySheet'
 import { createInitialStory } from './data/mockStory'
+import { createObjectUrl, releaseObjectUrl } from './utils/photo'
 import type { MemoryCardData, StoryStructure } from './types'
 
 type Screen =
@@ -47,15 +48,47 @@ function App() {
   }, [])
 
   const deleteCard = useCallback((periodId: string, cardId: string) => {
-    setStory((prev) => ({
-      periods: prev.periods.map((p) => (p.id === periodId ? { ...p, cards: p.cards.filter((c) => c.id !== cardId) } : p)),
-    }))
+    setStory((prev) => {
+      const card = prev.periods.find((p) => p.id === periodId)?.cards.find((c) => c.id === cardId)
+      if (card?.photo) releaseObjectUrl(card.photo)
+      return {
+        periods: prev.periods.map((p) => (p.id === periodId ? { ...p, cards: p.cards.filter((c) => c.id !== cardId) } : p)),
+      }
+    })
     setEditing(null)
   }, [])
 
+  const addPhoto = useCallback((periodId: string, cardId: string, file: File) => {
+    const url = createObjectUrl(file)
+    setStory((prev) => ({
+      periods: prev.periods.map((p) =>
+        p.id === periodId
+          ? {
+              ...p,
+              cards: p.cards.map((c) => {
+                if (c.id !== cardId) return c
+                if (c.photo) releaseObjectUrl(c.photo)
+                return { ...c, photo: url }
+              }),
+            }
+          : p,
+      ),
+    }))
+  }, [])
+
   const deletePhoto = useCallback((periodId: string, cardId: string) => {
-    updateCard(periodId, cardId, { photo: undefined })
-  }, [updateCard])
+    setStory((prev) => {
+      const card = prev.periods.find((p) => p.id === periodId)?.cards.find((c) => c.id === cardId)
+      if (card?.photo) releaseObjectUrl(card.photo)
+      return {
+        periods: prev.periods.map((p) =>
+          p.id === periodId
+            ? { ...p, cards: p.cards.map((c) => (c.id === cardId ? { ...c, photo: undefined } : c)) }
+            : p,
+        ),
+      }
+    })
+  }, [])
 
   const currentPeriod = screen.name === 'period' ? story.periods.find((p) => p.id === screen.periodId) : undefined
   const editingCard =
@@ -76,6 +109,7 @@ function App() {
         onOpenPeriod={openPeriod}
         onOpenCard={(periodId, cardId) => setEditing({ periodId, cardId })}
         onAddCard={addCard}
+        onAddPhoto={addPhoto}
       />
     )
   } else if (currentPeriod) {
@@ -87,11 +121,12 @@ function App() {
         onOpenPeriod={openPeriod}
         onCardOpen={(cardId) => setEditing({ periodId: currentPeriod.id, cardId })}
         onAddCard={() => addCard(currentPeriod.id)}
+        onAddPhoto={(cardId, file) => addPhoto(currentPeriod.id, cardId, file)}
         onViewStory={openStory}
       />
     )
   } else {
-    content = <StoryScreen periods={story.periods} onOpenPeriod={openPeriod} onOpenCard={(a, b) => setEditing({ periodId: a, cardId: b })} onAddCard={addCard} />
+    content = <StoryScreen periods={story.periods} onOpenPeriod={openPeriod} onOpenCard={(a, b) => setEditing({ periodId: a, cardId: b })} onAddCard={addCard} onAddPhoto={addPhoto} />
   }
 
   return (
@@ -107,6 +142,7 @@ function App() {
           onChange={(patch) => updateCard(editing.periodId, editingCard.id, patch)}
           onDeletePhoto={() => deletePhoto(editing.periodId, editingCard.id)}
           onDeleteCard={() => deleteCard(editing.periodId, editingCard.id)}
+          onSelectPhoto={(file) => addPhoto(editing.periodId, editingCard.id, file)}
         />
       )}
     </AppShell>

@@ -1,11 +1,12 @@
 import type { MemoryCardData } from '../types'
+import { PhotoPicker } from './PhotoPicker'
 import './MemoryCard.css'
 
 interface MemoryCardProps {
   card: MemoryCardData
   isEmpty?: boolean
   onOpen?: () => void
-  onAddPhoto?: () => void
+  onAddPhoto?: (file: File) => void
 }
 
 export function MemoryCard({ card, isEmpty, onOpen, onAddPhoto }: MemoryCardProps) {
@@ -15,13 +16,33 @@ export function MemoryCard({ card, isEmpty, onOpen, onAddPhoto }: MemoryCardProp
 
   const handleOpen = () => onOpen?.()
 
-  const handleAddPhoto = () => {
-    if (onAddPhoto) {
-      onAddPhoto()
-    } else {
-      handleOpen()
-    }
-  }
+  const addArea = onAddPhoto ? (
+    <PhotoPicker onSelect={onAddPhoto}>
+      {(open) => (
+        <button
+          type="button"
+          className="memory-card__add"
+          aria-label={`Добавить фото: ${title}`}
+          onClick={open}
+        >
+          <span className="memory-card__plus" aria-hidden="true">
+            +
+          </span>
+        </button>
+      )}
+    </PhotoPicker>
+  ) : (
+    <button
+      type="button"
+      className="memory-card__add"
+      aria-label={`Добавить фото: ${title}`}
+      onClick={handleOpen}
+    >
+      <span className="memory-card__plus" aria-hidden="true">
+        +
+      </span>
+    </button>
+  )
 
   return (
     <article className={`memory-card ${empty ? 'memory-card--empty' : 'memory-card--filled'}`}>
@@ -34,16 +55,7 @@ export function MemoryCard({ card, isEmpty, onOpen, onAddPhoto }: MemoryCardProp
             loading="lazy"
           />
         ) : (
-          <button
-            type="button"
-            className="memory-card__add"
-            aria-label={`Редактировать: ${title}`}
-            onClick={handleAddPhoto}
-          >
-            <span className="memory-card__plus" aria-hidden="true">
-              +
-            </span>
-          </button>
+          addArea
         )}
       </div>
 

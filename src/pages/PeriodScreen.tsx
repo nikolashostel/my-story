@@ -11,6 +11,7 @@ interface PeriodScreenProps {
   onOpenPeriod: (periodId: string) => void
   onCardOpen: (cardId: string) => void
   onAddCard: () => void
+  onAddPhoto: (cardId: string, file: File) => void
   onViewStory: () => void
 }
 
@@ -21,6 +22,7 @@ export function PeriodScreen({
   onOpenPeriod,
   onCardOpen,
   onAddCard,
+  onAddPhoto,
   onViewStory,
 }: PeriodScreenProps) {
   const filled = currentPeriod.cards.filter((card) => card.photo)
@@ -60,7 +62,12 @@ export function PeriodScreen({
 
         <div className="period-grid">
           {ordered.map((card) => (
-            <MemoryCard key={card.id} card={card} onOpen={() => onCardOpen(card.id)} />
+            <MemoryCard
+              key={card.id}
+              card={card}
+              onOpen={() => onCardOpen(card.id)}
+              onAddPhoto={(file) => onAddPhoto(card.id, file)}
+            />
           ))}
           <AddMemoryCard onCreate={onAddCard} />
         </div>

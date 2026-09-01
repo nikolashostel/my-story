@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { MemoryCardData } from '../types'
+import { PhotoPicker } from './PhotoPicker'
 import './MemorySheet.css'
 
 const TITLE_MAX = 30
@@ -13,9 +14,10 @@ interface MemorySheetProps {
   onChange: (patch: Partial<MemoryCardData>) => void
   onDeletePhoto: () => void
   onDeleteCard: () => void
+  onSelectPhoto: (file: File) => void
 }
 
-export function MemorySheet({ card, open, onClose, onChange, onDeletePhoto, onDeleteCard }: MemorySheetProps) {
+export function MemorySheet({ card, open, onClose, onChange, onDeletePhoto, onDeleteCard, onSelectPhoto }: MemorySheetProps) {
   const [title, setTitle] = useState(card.title)
   const [year, setYear] = useState(card.year ? String(card.year) : '')
   const [memory, setMemory] = useState(card.memory ?? '')
@@ -141,6 +143,15 @@ export function MemorySheet({ card, open, onClose, onChange, onDeletePhoto, onDe
           </div>
 
           <div className="sheet__actions">
+            {card.photo && (
+              <PhotoPicker onSelect={onSelectPhoto}>
+                {(open) => (
+                  <button type="button" className="sheet-btn sheet-btn--secondary" onClick={open}>
+                    Заменить фотографию
+                  </button>
+                )}
+              </PhotoPicker>
+            )}
             {card.photo && (
               <button type="button" className="sheet-btn sheet-btn--danger" onClick={handleDeletePhoto}>
                 {confirmPhoto ? 'Точно удалить фотографию?' : 'Удалить фотографию'}
