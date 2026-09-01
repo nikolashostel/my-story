@@ -5,6 +5,20 @@
   gap: 40px;
 }
 
+.story-empty {
+  margin-top: 48px;
+  text-align: center;
+}
+
+.story-empty__text {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  line-height: 1.4;
+  color: var(--color-muted);
+  margin: 0 auto;
+  max-width: 340px;
+}
+
 .period-section__head {
   margin-bottom: 16px;
 }

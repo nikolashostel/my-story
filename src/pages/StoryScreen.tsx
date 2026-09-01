@@ -6,27 +6,36 @@ import '../styles/pages/StoryScreen.css'
 interface StoryScreenProps {
   periods: PeriodData[]
   onOpenPeriod: (periodId: string) => void
-  onAddPhoto: () => void
+  onOpenCard: (periodId: string, cardId: string) => void
+  onAddCard: (periodId: string) => void
 }
 
-export function StoryScreen({ periods, onOpenPeriod, onAddPhoto }: StoryScreenProps) {
+export function StoryScreen({ periods, onOpenPeriod, onOpenCard, onAddCard }: StoryScreenProps) {
   const visiblePeriods = periods.filter((p) => p.cards.length > 0)
 
   return (
     <main className="page page--story">
       <StoryHeader title="Моя история" />
 
-      <div className="story-periods">
-        {visiblePeriods.map((period) => (
-          <PeriodSection
-            key={period.id}
-            title={period.title}
-            cards={period.cards}
-            onAddPhoto={onAddPhoto}
-            onOpenPeriod={() => onOpenPeriod(period.id)}
-          />
-        ))}
-      </div>
+      {visiblePeriods.length === 0 ? (
+        <div className="story-empty">
+          <p className="story-empty__text">Твоя история ещё пуста. Пора начать её собирать.</p>
+        </div>
+      ) : (
+        <div className="story-periods">
+          {visiblePeriods.map((period) => (
+            <PeriodSection
+              key={period.id}
+              title={period.title}
+              cards={period.cards}
+              onAddPhoto={() => {}}
+              onCardOpen={(card) => onOpenCard(period.id, card.id)}
+              onAddCard={() => onAddCard(period.id)}
+              onOpenPeriod={() => onOpenPeriod(period.id)}
+            />
+          ))}
+        </div>
+      )}
     </main>
   )
 }

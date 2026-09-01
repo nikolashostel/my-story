@@ -11,15 +11,17 @@ interface MemoryCardProps {
 export function MemoryCard({ card, isEmpty, onOpen, onAddPhoto }: MemoryCardProps) {
   const empty = isEmpty ?? !card.photo
 
-  const handleClick = () => {
-    if (empty) {
-      onAddPhoto?.()
-      return
-    }
-    onOpen?.()
-  }
+  const title = card.title || 'Новая карточка'
 
-  const title = card.title
+  const handleOpen = () => onOpen?.()
+
+  const handleAddPhoto = () => {
+    if (onAddPhoto) {
+      onAddPhoto()
+    } else {
+      handleOpen()
+    }
+  }
 
   return (
     <article className={`memory-card ${empty ? 'memory-card--empty' : 'memory-card--filled'}`}>
@@ -35,8 +37,8 @@ export function MemoryCard({ card, isEmpty, onOpen, onAddPhoto }: MemoryCardProp
           <button
             type="button"
             className="memory-card__add"
-            aria-label={`Добавить фотографию: ${title}`}
-            onClick={onAddPhoto}
+            aria-label={`Редактировать: ${title}`}
+            onClick={handleAddPhoto}
           >
             <span className="memory-card__plus" aria-hidden="true">
               +
@@ -49,7 +51,7 @@ export function MemoryCard({ card, isEmpty, onOpen, onAddPhoto }: MemoryCardProp
         type="button"
         className="memory-card__body"
         aria-label={empty ? `Открыть карточку: ${title}` : `Редактировать: ${title}`}
-        onClick={handleClick}
+        onClick={handleOpen}
       >
         <h3 className="memory-card__title">{title}</h3>
         {card.year && <span className="memory-card__year">{card.year}</span>}

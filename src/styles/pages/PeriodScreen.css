@@ -1,5 +1,80 @@
-.period-grid {
+.period-screen {
   margin-top: 24px;
+}
+
+.period-screen__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.period-screen__title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 34px;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+  color: var(--color-ink);
+}
+
+.period-screen__hint {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.period-screen__story-link {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-accent);
+  padding: 8px 4px;
+  min-height: 44px;
+}
+
+.period-screen__story-link:hover {
+  color: var(--color-ink);
+}
+
+.period-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.period-switcher__chip {
+  min-height: 40px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-muted);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  transition: background-color 200ms var(--ease), color 200ms var(--ease), border-color 200ms var(--ease);
+}
+
+.period-switcher__chip:hover,
+.period-switcher__chip:focus-visible {
+  color: var(--color-ink);
+  border-color: rgba(138, 123, 150, 0.4);
+}
+
+.period-switcher__chip--active {
+  color: #6b5a76;
+  border-color: rgba(138, 123, 150, 0.45);
+  background-color: rgba(138, 123, 150, 0.12);
+}
+
+.period-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
@@ -17,5 +92,15 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 24px;
     max-width: 1280px;
+  }
+}
+
+@media (min-width: 768px) {
+  .period-screen__title {
+    font-size: 42px;
+  }
+
+  .period-screen__hint {
+    font-size: 17px;
   }
 }

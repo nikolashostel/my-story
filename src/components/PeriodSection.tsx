@@ -5,7 +5,7 @@ import { MemoryCard } from './MemoryCard'
 interface PeriodSectionProps {
   title: string
   cards: MemoryCardData[]
-  onCardOpen?: () => void
+  onCardOpen?: (card: MemoryCardData) => void
   onAddCard?: () => void
   onAddPhoto?: () => void
   onOpenPeriod?: () => void
@@ -39,7 +39,12 @@ export function PeriodSection({
       {hasCards && (
         <div className="period-section__grid">
           {cards.map((card) => (
-            <MemoryCard key={card.id} card={card} onOpen={onCardOpen} onAddPhoto={onAddPhoto} />
+            <MemoryCard
+              key={card.id}
+              card={card}
+              onOpen={() => onCardOpen?.(card)}
+              onAddPhoto={onAddPhoto}
+            />
           ))}
           {onAddCard && <AddMemoryCard onCreate={onAddCard} />}
         </div>

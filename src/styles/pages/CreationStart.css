@@ -1,0 +1,138 @@
+.creation-start {
+  max-width: 640px;
+  margin: 24px auto 0;
+}
+
+.creation-start__eyebrow {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.creation-start__title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 34px;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 0 0 16px;
+  color: var(--color-ink);
+}
+
+.creation-start__lead {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--color-ink-2);
+  margin: 0 0 32px;
+}
+
+.creation-start__periods {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.creation-start__period {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  text-align: left;
+  padding: 18px 20px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-soft);
+  transition: transform 200ms var(--ease), border-color 200ms var(--ease), box-shadow 200ms var(--ease);
+}
+
+.creation-start__period:hover,
+.creation-start__period:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(138, 123, 150, 0.4);
+  box-shadow: var(--shadow-card);
+}
+
+.creation-start__period--primary {
+  border-color: rgba(138, 123, 150, 0.45);
+  background: linear-gradient(135deg, var(--color-surface), rgba(138, 123, 150, 0.08));
+}
+
+.creation-start__period-index {
+  flex: none;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+}
+
+.creation-start__period--primary .creation-start__period-index {
+  color: var(--color-plum);
+}
+
+.creation-start__period-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex: 1;
+}
+
+.creation-start__period-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1.25;
+  color: var(--color-ink);
+}
+
+.creation-start__period-hint {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--color-muted);
+}
+
+.creation-start__period-badge {
+  flex: none;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 999px;
+  color: #6b5a76;
+  background-color: rgba(138, 123, 150, 0.14);
+}
+
+.creation-start__period-arrow {
+  flex: none;
+  font-size: 20px;
+  color: var(--color-muted);
+  transition: transform 200ms var(--ease);
+}
+
+.creation-start__period:hover .creation-start__period-arrow,
+.creation-start__period:focus-visible .creation-start__period-arrow {
+  transform: translateX(4px);
+  color: var(--color-ink);
+}
+
+.creation-start__note {
+  margin: 28px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .creation-start {
+    margin-top: 48px;
+  }
+
+  .creation-start__title {
+    font-size: 42px;
+  }
+}
