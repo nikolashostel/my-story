@@ -6,8 +6,9 @@ import { CreationStart } from './pages/CreationStart'
 import { StoryScreen } from './pages/StoryScreen'
 import { PeriodScreen } from './pages/PeriodScreen'
 import { MemorySheet } from './components/MemorySheet'
+import { PhotoCropper } from './components/PhotoCropper'
 import { createInitialStory } from './data/mockStory'
-import { createObjectUrl, releaseObjectUrl } from './utils/photo'
+import { releaseObjectUrl } from './utils/photo'
 import type { MemoryCardData, StoryStructure } from './types'
 
 type Screen =
@@ -20,6 +21,7 @@ function App() {
   const [screen, setScreen] = useState<Screen>({ name: 'landing' })
   const [story, setStory] = useState<StoryStructure>(() => createInitialStory())
   const [editing, setEditing] = useState<{ periodId: string; cardId: string } | null>(null)
+  const [cropTarget, setCropTarget] = useState<{ periodId: string; cardId: string; file: File } | null>(null)
 
   const openCreation = () => setScreen({ name: 'creation-start' })
   const openStory = () => setScreen({ name: 'story' })
@@ -58,8 +60,7 @@ function App() {
     setEditing(null)
   }, [])
 
-  const addPhoto = useCallback((periodId: string, cardId: string, file: File) => {
-    const url = createObjectUrl(file)
+  const applyPhoto = useCallback((periodId: string, cardId: string, url: string) => {
     setStory((prev) => ({
       periods: prev.periods.map((p) =>
         p.id === periodId
@@ -74,6 +75,10 @@ function App() {
           : p,
       ),
     }))
+  }, [])
+
+  const openCropper = useCallback((periodId: string, cardId: string, file: File) => {
+    setCropTarget({ periodId, cardId, file })
   }, [])
 
   const deletePhoto = useCallback((periodId: string, cardId: string) => {
@@ -109,7 +114,7 @@ function App() {
         onOpenPeriod={openPeriod}
         onOpenCard={(periodId, cardId) => setEditing({ periodId, cardId })}
         onAddCard={addCard}
-        onAddPhoto={addPhoto}
+        onAddPhoto={openCropper}
       />
     )
   } else if (currentPeriod) {
@@ -121,12 +126,12 @@ function App() {
         onOpenPeriod={openPeriod}
         onCardOpen={(cardId) => setEditing({ periodId: currentPeriod.id, cardId })}
         onAddCard={() => addCard(currentPeriod.id)}
-        onAddPhoto={(cardId, file) => addPhoto(currentPeriod.id, cardId, file)}
+        onAddPhoto={(cardId, file) => openCropper(currentPeriod.id, cardId, file)}
         onViewStory={openStory}
       />
     )
   } else {
-    content = <StoryScreen periods={story.periods} onOpenPeriod={openPeriod} onOpenCard={(a, b) => setEditing({ periodId: a, cardId: b })} onAddCard={addCard} onAddPhoto={addPhoto} />
+    content = <StoryScreen periods={story.periods} onOpenPeriod={openPeriod} onOpenCard={(a, b) => setEditing({ periodId: a, cardId: b })} onAddCard={addCard} onAddPhoto={openCropper} />
   }
 
   return (
@@ -142,7 +147,18 @@ function App() {
           onChange={(patch) => updateCard(editing.periodId, editingCard.id, patch)}
           onDeletePhoto={() => deletePhoto(editing.periodId, editingCard.id)}
           onDeleteCard={() => deleteCard(editing.periodId, editingCard.id)}
-          onSelectPhoto={(file) => addPhoto(editing.periodId, editingCard.id, file)}
+          onSelectPhoto={(file) => openCropper(editing.periodId, editingCard.id, file)}
+        />
+      )}
+
+      {cropTarget && (
+        <PhotoCropper
+          file={cropTarget.file}
+          onSave={(url) => {
+            applyPhoto(cropTarget.periodId, cropTarget.cardId, url)
+            setCropTarget(null)
+          }}
+          onCancel={() => setCropTarget(null)}
         />
       )}
     </AppShell>
